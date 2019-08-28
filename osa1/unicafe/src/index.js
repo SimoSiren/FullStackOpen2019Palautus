@@ -1,18 +1,15 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
+const Button = (props) => {
+    return (
+        <button onClick={props.value}> {props.text} </button>
+    )
+}
+
 const Statistics = (props) => {
     return (
-        <div>
-            <h1>Statistics</h1>
-            <br />
-            <p>Good {props.good} </p>
-            <p>Neutral {props.neutral}</p>
-            <p>Bad {props.bad}</p>
-            <p>All {props.all}</p>
-            <p>Average {props.average}</p>
-            <p>Positive {props.positive} %</p>
-        </div>
+        <p>{props.text} {props.value} </p>
     )
 }
 
@@ -26,29 +23,48 @@ const App = () => {
     const [follow, setFollow] = useState(0)
     const [positive, setPositive] = useState(0)
 
+    if (all < 1) {
+        return (
+            <div>
+
+                <h1>Give feedback</h1>
+
+                <Button text="good" value={() => setGood(good + 1) + setAll(all + 1) + setFollow(follow + 1) + setAverage(follow / all) + setPositive(good / all)} />
+
+                <Button text="neutral" value={() => setNeutral(neutral + 1) + setAll(all + 1) + setPositive(good / all) + setAverage(follow / all)} />
+
+                <Button text="bad" value={() => setBad(bad + 1) + setAll(all + 1) + setFollow(follow - 1) + setAverage(follow / all)
+                    + setPositive(good / all)} />
+
+                <h1>Statistics</h1>
+
+                <p>No feedback is given</p>
+
+            </div>
+        )
+    }
+
     return (
         <div>
             <h1>Give feedback</h1>
-            <br />
 
-            <button onClick={() => setGood(good + 1) + setAll(all + 1) + setFollow(follow + 1) + setAverage(follow / all) + setPositive(good / all)}>
-                Good
-                </button>
+            <Button text="good" value={() => setGood(good + 1) + setAll(all + 1) + setFollow(follow + 1) + setAverage(follow / all) + setPositive(good / all)} />
 
-            <button onClick={() => setNeutral(neutral + 1) + setAll(all + 1) + setPositive(good / all) + setAverage(follow / all)}>
-                Neutral
-                </button>
+            <Button text="neutral" value={() => setNeutral(neutral + 1) + setAll(all + 1) + setPositive(good / all) + setAverage(follow / all)} />
 
-            <button onClick={() => setBad(bad + 1) + setAll(all + 1) + setFollow(follow - 1) + setAverage(follow / all)
-                + setPositive(good / all)}>
-                Bad
-                </button>
-            <br />
-            <Statistics good={good} neutral={neutral} bad={bad}
-                all={all} average={average} positive={positive} />
+            <Button text="bad" value={() => setBad(bad + 1) + setAll(all + 1) + setFollow(follow - 1) + setAverage(follow / all)
+                + setPositive(good / all)} />
+
+            <h1>Statistics</h1>
+
+            <Statistics text="good" value={good} />
+            <Statistics text="neutral" value={neutral} />
+            <Statistics text="bad" value={bad} />
+            <Statistics text="all" value={all} />
+            <Statistics text="average" value={average} />
+            <Statistics text="positive" value={positive} />
         </div>
     )
-
 }
 
 ReactDOM.render(<App />,

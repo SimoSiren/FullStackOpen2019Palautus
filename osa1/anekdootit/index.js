@@ -9,13 +9,29 @@ const Button = (props) => {
 
 const App = (props) => {
     const [selected, setSelected] = useState(0)
+    const [points, setPoints] = useState([0, 0, 0, 0, 0, 0])
+
+    const voteAnekdote = () => {
+        const copy = [...points]
+        copy[selected]++
+        setPoints(copy)
+    }
+
+    console.log(points, selected)
 
     return (
         <div >
             <div>
                 {props.anecdotes[selected]}
             </div>
+            <div>
+                <p>This anekdote has got {points[selected]} votes.</p>
+            </div>
 
+            <div style={{ textAlign: 'left' }}>
+                <Button text="Vote" value={() => voteAnekdote()}
+                />
+            </div>
             <div style={{ textAlign: 'left' }}>
                 <Button text="Next anecdote" value={() => setSelected(Math.floor(Math.random() * 4))} />
             </div>

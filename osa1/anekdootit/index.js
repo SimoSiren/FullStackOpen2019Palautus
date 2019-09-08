@@ -12,9 +12,9 @@ const App = (props) => {
     const [points, setPoints] = useState([0, 0, 0, 0, 0, 0])
 
     const voteAnekdote = () => {
-        const copy = [...points]
-        copy[selected]++
-        setPoints(copy)
+        const newPoints = [...points]
+        newPoints[selected] = points[selected] + 1
+        setPoints(newPoints)
     }
 
     console.log(points, selected)
